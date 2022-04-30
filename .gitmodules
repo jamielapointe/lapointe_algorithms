@@ -1,8 +1,8 @@
 [submodule "googlebenchmark"]
 	path = third_party/benchmark
 	url = https://github.com/google/benchmark.git
-	branch = master
+	branch = main
 [submodule "googletest"]
 	path = third_party/googletest
 	url = https://github.com/google/googletest.git
-	branch = master
+	branch = main
