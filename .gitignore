@@ -30,9 +30,3 @@ clangTidy/
 *.exe
 *.out
 *.app
-
-# Tools
-.cache/
-.vscode/
-build/
-clangTidy/

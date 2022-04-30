@@ -1,2 +1,4 @@
 
-target_sources(test_lapointe_algorithms PRIVATE test_buffer.cpp)
+target_sources(test_lapointe_algorithms PRIVATE main.cpp
+                                                test_buffer.cpp
+                                                test_sort.cpp)
