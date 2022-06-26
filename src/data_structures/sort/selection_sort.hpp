@@ -24,15 +24,19 @@
 #include <algorithm>
 #include <cstdint>
 
+#include "comparisons.hpp"
+
 namespace LaPointe_Algorithms::Data_Structures::Sort {
 
-template <typename Random_Access_Iterator>
-void selection_sort(Random_Access_Iterator begin, Random_Access_Iterator end) {
+template <typename Random_Access_Iterator,
+          typename Compare = LaPointe_Algorithms::Data_Structures::Compare::Iterator_Less_Than_Iterator>
+void selection_sort(Random_Access_Iterator begin, Random_Access_Iterator end,
+                    Compare comp = LaPointe_Algorithms::Data_Structures::Compare::iterator_less_than_iteraor()) {
   while (begin != end) {
     Random_Access_Iterator min_j = begin;
     Random_Access_Iterator j     = begin;
     while (j != end) {
-      if (*j < *min_j) {
+      if (comp(j, min_j)) {
         min_j = j;
       }
       j += 1;

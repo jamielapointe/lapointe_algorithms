@@ -1,5 +1,5 @@
 [submodule "googlebenchmark"]
-	path = third_party/benchmark
+	path = third_party/googlebenchmark
 	url = https://github.com/google/benchmark.git
 	branch = main
 [submodule "googletest"]

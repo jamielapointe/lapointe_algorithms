@@ -9,7 +9,6 @@
 /// repeat until no more items exist in the list
 ///
 /// Time Complexity:
-///
 /// - Worse-case: \f$O(n^2)\f$ comparisons, \f$O(n^2)\f$ swaps
 /// - Best-case: \f$O(n)\f$ comparisons, \f$O(1)\f$ swaps
 /// - Average: \f$O(n^2)\f$ comparisons, \f$O(n^2)\f$ swaps
@@ -20,15 +19,19 @@
 
 #include <cstdint>
 
+#include "comparisons.hpp"
+
 namespace LaPointe_Algorithms::Data_Structures::Sort {
 
-template <typename Random_Access_Iterator>
-void insertion_sort(Random_Access_Iterator begin, Random_Access_Iterator end) {
+template <typename Random_Access_Iterator,
+          typename Compare = LaPointe_Algorithms::Data_Structures::Compare::Iterator_Greater_Than_Value>
+void insertion_sort(Random_Access_Iterator begin, Random_Access_Iterator end,
+                    Compare comp = LaPointe_Algorithms::Data_Structures::Compare::iterator_greater_than_value()) {
   Random_Access_Iterator i = begin + 1;
   while (i < end) {
     auto                   x = *i;
     Random_Access_Iterator j = i - 1;
-    while (j >= begin && *j > x) {
+    while (j >= begin && comp(j, x)) {
       *(j + 1) = *j;
       j -= 1;
     }
