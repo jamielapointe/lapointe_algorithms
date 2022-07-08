@@ -1,19 +1,19 @@
-///
-/// Implements the randomized contraction algorithm for the min cut problem
-/// The min cut problem is cutting the graph in such a way that it minimizes the number of
-/// crossing edges between the cut graph (A,B)
-///
+
+#pragma once
+
 #include <algorithm>
 #include <array>
 #include <cassert>
 #include <cstdint>
+#include <exception>
 #include <functional>
 #include <iostream>
 #include <list>
 #include <random>
+#include <stdexcept>
 #include <unordered_map>
 
-// TODO(jamie): Can I do this without using pointers?
+namespace LaPointe_Algorithms::algorithms::graphs {
 
 struct Edge;
 struct Node;
@@ -28,6 +28,7 @@ struct Node {
   std::list<std::reference_wrapper<Edge>> edges;
 
   uint32_t                                node_id;
+  bool                                    is_visited{false};
 
   bool                                    operator==(Node const& node) const { return node.node_id == node_id; }
 };
@@ -58,6 +59,7 @@ struct Adjacency_List {
       add_edge(edge.endpoint_node_u.node_id, edge.endpoint_node_v.node_id);
     }
   }
+  Adjacency_List(Adjacency_List const&& other) = delete;
 
   Adjacency_List& operator=(Adjacency_List const& other) {
     nodes.clear();
@@ -70,6 +72,9 @@ struct Adjacency_List {
     }
     return *this;
   }
+  Adjacency_List&& operator=(Adjacency_List const&& other) = delete;
+
+  ~Adjacency_List()                                        = default;
 
   Node& add_node(uint32_t id) {
     if (id > max_node_id) max_node_id = id;
@@ -77,6 +82,20 @@ struct Adjacency_List {
   }
 
   Node& add_node() { return add_node(max_node_id + 1); }
+
+  void  clear_visitations() {
+     for (auto& node : nodes) {
+       node.is_visited = false;
+    }
+  }
+
+  bool all_nodes_visited() {
+    bool all_visited{true};
+    for (auto const& node : nodes) {
+      all_visited &= node.is_visited;
+    }
+    return all_visited;
+  }
 
   Edge& add_edge(Node& u, Node& v, bool unique_only = false) {
     if (unique_only) {
@@ -86,7 +105,10 @@ struct Adjacency_List {
       });
       if (it != edges.end()) {
         // not unique, so just return the found edge
-        return *it;
+        auto& edge = *it;
+        u.edges.push_back(edge);
+        v.edges.push_back(edge);
+        return edge;
       }
     }
     auto& edge = edges.emplace_back(u, v);
@@ -98,12 +120,16 @@ struct Adjacency_List {
   Edge& add_edge(uint32_t u_node_id, uint32_t v_node_id, bool unique_only = false) {
     auto node_iterator_u =
         std::find_if(nodes.begin(), nodes.end(), [u_node_id](Node& node) { return node.node_id == u_node_id; });
-    assert(node_iterator_u != nodes.end());
+    if (node_iterator_u == std::end(nodes)) {
+      throw std::out_of_range("Could not find u_node_id.");
+    }
     Node& u = *node_iterator_u;
 
     auto  node_iterator_v =
         std::find_if(nodes.begin(), nodes.end(), [v_node_id](Node& node) { return node.node_id == v_node_id; });
-    assert(node_iterator_v != nodes.end());
+    if (node_iterator_v == std::end(nodes)) {
+      throw std::out_of_range("Could not find v_node_id.");
+    }
     Node& v = *node_iterator_v;
 
     return add_edge(u, v, unique_only);
@@ -159,46 +185,4 @@ struct Adjacency_List {
   uint32_t        max_node_id{0};
 };
 
-// ignore any edges that went specifically from/to u and v (there was at least one since it was on the edge we
-// selected)
-// We merge the edges from Node v onto u (ignoring the edge from u to v) and then remove v
-Node& merge_nodes(Node& u, Node& v, Adjacency_List& graph) {
-  // loop through all the edges of node v - adding them to node u (with the exception of any self-nodes)
-  // again, we allow parallel (i.e. duplicate) edges
-  for (auto& edge_wrapper : v.edges) {
-    auto& edge       = edge_wrapper.get();
-    // Get the node pointed by edge that is NOT the v node (i.e. the "other" node)
-    auto& other_node = v != edge.endpoint_node_u ? edge.endpoint_node_u : edge.endpoint_node_v;
-    // ignore self edges
-    if (other_node != u) {
-      graph.add_edge(u, other_node);
-    }
-  }
-  graph.remove_node(v);
-  return u;
-}
-
-/// Returns the number of crossing edges in the randomly selected cut
-std::size_t min_cut_randomized_contraction(Adjacency_List const& graph_in) {
-  Adjacency_List     graph(graph_in);
-  std::random_device rd;
-  std::mt19937_64    generator(rd());
-
-  // uint32_t       index{0};
-  // uint32_t       selected_indicies[]{1, 1, 2, 0, 0, 0, 0};
-
-  // note that there are better optimized ways of doing this...
-  while (graph.number_of_nodes() > 2) {
-    // randomly select an edge
-    std::uniform_int_distribution<uint32_t> distribution(0, static_cast<uint32_t>(graph.number_of_edges() - 1));
-    uint32_t                                random_edge_index = distribution(generator);
-    // uint32_t random_edge_index = selected_indicies[index++];
-    // std::cout << "random edge ID = " << random_edge_index << std::endl;
-    auto                                    edge_iterator     = graph.edges.begin();
-    std::advance(edge_iterator, random_edge_index);
-    auto& edge = *edge_iterator;
-    merge_nodes(edge.endpoint_node_u, edge.endpoint_node_v, graph);
-  }
-
-  return graph.number_of_edges();
-}
+}  // namespace LaPointe_Algorithms::algorithms::graphs

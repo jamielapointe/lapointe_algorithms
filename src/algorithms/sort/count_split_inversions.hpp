@@ -19,18 +19,19 @@
 #include <cstddef>
 #include <cstdint>
 #include <iterator>
+#include <memory>
 #include <type_traits>
 
 #include "comparisons.hpp"
 
-namespace LaPointe_Algorithms::Data_Structures::Count_Split_Inversions {
+namespace LaPointe_Algorithms::algorithms::sort {
 
 template <typename Random_Access_Iterator,
-          typename Compare = LaPointe_Algorithms::Data_Structures::Compare::Iterator_Less_Than_Equal_Iterator>
+          typename Compare = LaPointe_Algorithms::algorithms::compare::Iterator_Less_Than_Equal_Iterator>
 uint32_t merge_count_split_inv(
     Random_Access_Iterator begin, Random_Access_Iterator middle, Random_Access_Iterator end,
     Random_Access_Iterator begin_dest, Random_Access_Iterator end_dest,
-    Compare comp = LaPointe_Algorithms::Data_Structures::Compare::iterator_less_than_equal_iteraor());
+    Compare comp = LaPointe_Algorithms::algorithms::compare::iterator_less_than_equal_iteraor());
 
 template <typename Random_Access_Iterator>
 uint32_t sort_count_inv(Random_Access_Iterator begin, Random_Access_Iterator end, Random_Access_Iterator begin_dest,
@@ -91,14 +92,13 @@ uint32_t sort_count_inv(Random_Access_Iterator begin, Random_Access_Iterator end
   std::size_t length = static_cast<std::size_t>(end - begin);
   if (length < 1) return 0;
   using T                           = typename std::remove_pointer<Random_Access_Iterator>::type;
-  auto                   dest       = new T[length]();  // temporary holding array
-  Random_Access_Iterator begin_dest = dest;
+  auto                   dest       = std::make_unique<T[]>(length);  // NOLINT - ignore c style array here
+  Random_Access_Iterator begin_dest = dest.get();
   Random_Access_Iterator end_dest   = begin_dest;
   std::advance(end_dest, length);
   std::copy(begin, end, begin_dest);
   uint32_t total_count = sort_count_inv(begin_dest, end_dest, begin, end);
-  delete[] dest;  // cleanup after yourself
   return total_count;
 }
 
-}  // namespace LaPointe_Algorithms::Data_Structures::Count_Split_Inversions
+}  // namespace LaPointe_Algorithms::algorithms::sort

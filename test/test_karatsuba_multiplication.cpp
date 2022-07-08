@@ -4,11 +4,11 @@
 
 #include "karatsuba_multiplication.hpp"
 
-using LaPointe_Algorithms::Multiplication::Karatsuba::add;
-using LaPointe_Algorithms::Multiplication::Karatsuba::multiply;
-using LaPointe_Algorithms::Multiplication::Karatsuba::sub;
+using LaPointe_Algorithms::multiplication::karatsuba::add;
+using LaPointe_Algorithms::multiplication::karatsuba::multiply;
+using LaPointe_Algorithms::multiplication::karatsuba::sub;
 
-TEST(TestKaratsubaMultiplication, simpleAdd0) {
+TEST(TestKaratsubaMultiplication, simpleAdd0) {  // NOLINT
   std::string x   = "4";
   std::string y   = "2";
 
@@ -16,7 +16,7 @@ TEST(TestKaratsubaMultiplication, simpleAdd0) {
   ASSERT_EQ(sum, "6");
 }
 
-TEST(TestKaratsubaMultiplication, simpleAdd1) {
+TEST(TestKaratsubaMultiplication, simpleAdd1) {  // NOLINT
   std::string x   = "9";
   std::string y   = "9";
 
@@ -24,7 +24,7 @@ TEST(TestKaratsubaMultiplication, simpleAdd1) {
   ASSERT_EQ(sum, "18");
 }
 
-TEST(TestKaratsubaMultiplication, simpleAdd2) {
+TEST(TestKaratsubaMultiplication, simpleAdd2) {  // NOLINT
   std::string x   = "25";
   std::string y   = "36";
 
@@ -32,7 +32,7 @@ TEST(TestKaratsubaMultiplication, simpleAdd2) {
   ASSERT_EQ(sum, "61");
 }
 
-TEST(TestKaratsubaMultiplication, simpleAdd3) {
+TEST(TestKaratsubaMultiplication, simpleAdd3) {  // NOLINT
   std::string x   = "873";
   std::string y   = "541";
 
@@ -40,7 +40,7 @@ TEST(TestKaratsubaMultiplication, simpleAdd3) {
   ASSERT_EQ(sum, "1414");
 }
 
-TEST(TestKaratsubaMultiplication, simpleAdd4) {
+TEST(TestKaratsubaMultiplication, simpleAdd4) {  // NOLINT
   std::string x   = "873";
   std::string y   = "9";
 
@@ -48,7 +48,7 @@ TEST(TestKaratsubaMultiplication, simpleAdd4) {
   ASSERT_EQ(sum, "882");
 }
 
-TEST(TestKaratsubaMultiplication, largeAdd0) {
+TEST(TestKaratsubaMultiplication, largeAdd0) {  // NOLINT
   std::string x   = "3141592653589793238462643383279502884197169399375105820974944592";
   std::string y   = "2718281828459045235360287471352662497757247093699959574966967627";
 
@@ -56,7 +56,7 @@ TEST(TestKaratsubaMultiplication, largeAdd0) {
   ASSERT_EQ(sum, "5859874482048838473822930854632165381954416493075065395941912219");
 }
 
-TEST(TestKaratsubaMultiplication, simpleSub0) {
+TEST(TestKaratsubaMultiplication, simpleSub0) {  // NOLINT
   std::string x   = "4";
   std::string y   = "2";
 
@@ -64,7 +64,7 @@ TEST(TestKaratsubaMultiplication, simpleSub0) {
   ASSERT_EQ(sum, "2");
 }
 
-TEST(TestKaratsubaMultiplication, simpleSub1) {
+TEST(TestKaratsubaMultiplication, simpleSub1) {  // NOLINT
   std::string x   = "9";
   std::string y   = "9";
 
@@ -72,7 +72,7 @@ TEST(TestKaratsubaMultiplication, simpleSub1) {
   ASSERT_EQ(sum, "0");
 }
 
-TEST(TestKaratsubaMultiplication, simpleSub2) {
+TEST(TestKaratsubaMultiplication, simpleSub2) {  // NOLINT
   std::string x   = "25";
   std::string y   = "36";
 
@@ -80,7 +80,7 @@ TEST(TestKaratsubaMultiplication, simpleSub2) {
   ASSERT_EQ(sum, "-11");
 }
 
-TEST(TestKaratsubaMultiplication, simpleSub3) {
+TEST(TestKaratsubaMultiplication, simpleSub3) {  // NOLINT
   std::string x   = "873";
   std::string y   = "541";
 
@@ -88,7 +88,7 @@ TEST(TestKaratsubaMultiplication, simpleSub3) {
   ASSERT_EQ(sum, "332");
 }
 
-TEST(TestKaratsubaMultiplication, simpleSub4) {
+TEST(TestKaratsubaMultiplication, simpleSub4) {  // NOLINT
   std::string x   = "873";
   std::string y   = "9";
 
@@ -96,7 +96,7 @@ TEST(TestKaratsubaMultiplication, simpleSub4) {
   ASSERT_EQ(sum, "864");
 }
 
-TEST(TestKaratsubaMultiplication, largeSub0) {
+TEST(TestKaratsubaMultiplication, largeSub0) {  // NOLINT
   std::string x   = "3141592653589793238462643383279502884197169399375105820974944592";
   std::string y   = "2718281828459045235360287471352662497757247093699959574966967627";
 
@@ -104,7 +104,7 @@ TEST(TestKaratsubaMultiplication, largeSub0) {
   ASSERT_EQ(sum, "423310825130748003102355911926840386439922305675146246007976965");
 }
 
-TEST(TestKaratsubaMultiplication, simpleMultiplication0) {
+TEST(TestKaratsubaMultiplication, simpleMultiplication0) {  // NOLINT
   std::string x = "9";
   std::string y = "4";
   std::string expcted{"36"};
@@ -112,7 +112,7 @@ TEST(TestKaratsubaMultiplication, simpleMultiplication0) {
   ASSERT_EQ(product, expcted);
 }
 
-TEST(TestKaratsubaMultiplication, simpleMultiplication1) {
+TEST(TestKaratsubaMultiplication, simpleMultiplication1) {  // NOLINT
   std::string x = "26";
   std::string y = "5";
   std::string expected{"130"};
@@ -120,7 +120,7 @@ TEST(TestKaratsubaMultiplication, simpleMultiplication1) {
   ASSERT_EQ(product, expected);
 }
 
-TEST(TestKaratsubaMultiplication, simpleMultiplication2) {
+TEST(TestKaratsubaMultiplication, simpleMultiplication2) {  // NOLINT
   std::string x = "75";
   std::string y = "32";
   std::string expected{"2400"};
@@ -128,7 +128,7 @@ TEST(TestKaratsubaMultiplication, simpleMultiplication2) {
   ASSERT_EQ(product, expected);
 }
 
-TEST(TestKaratsubaMultiplication, simpleMultiplication3) {
+TEST(TestKaratsubaMultiplication, simpleMultiplication3) {  // NOLINT
   std::string x = "3747";
   std::string y = "7988";
   std::string expected{"29931036"};
@@ -136,7 +136,7 @@ TEST(TestKaratsubaMultiplication, simpleMultiplication3) {
   ASSERT_EQ(product, expected);
 }
 
-TEST(TestKaratsubaMultiplication, simpleMultiplication4) {
+TEST(TestKaratsubaMultiplication, simpleMultiplication4) {  // NOLINT
   std::string x = "9378";
   std::string y = "3";
   std::string expected{"28134"};
@@ -144,7 +144,7 @@ TEST(TestKaratsubaMultiplication, simpleMultiplication4) {
   ASSERT_EQ(product, expected);
 }
 
-TEST(TestKaratsubaMultiplication, largeMultiplication0) {
+TEST(TestKaratsubaMultiplication, largeMultiplication0) {  // NOLINT
   std::string x = "3141592653589793238462643383279502884197169399375105820974944592";
   std::string y = "2718281828459045235360287471352662497757247093699959574966967627";
   std::string expected(

@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace LaPointe_Algorithms::Data_Structures::Compare {
+namespace LaPointe_Algorithms::algorithms::compare {
 
 // iterator less than iterator
 struct Iterator_Less_Than_Iterator {
@@ -48,4 +48,4 @@ struct Iterator_Greater_Than_Value {
 };
 constexpr inline Iterator_Greater_Than_Value iterator_greater_than_value() { return {}; }
 
-}  // namespace LaPointe_Algorithms::Data_Structures::Compare
+}  // namespace LaPointe_Algorithms::algorithms::compare

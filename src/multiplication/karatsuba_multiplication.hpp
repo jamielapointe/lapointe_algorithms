@@ -25,7 +25,7 @@
 
 static constexpr long double ten{10.0L};
 
-namespace LaPointe_Algorithms::Multiplication::Karatsuba {
+namespace LaPointe_Algorithms::multiplication::karatsuba {
 
 template <typename Random_Access_Iterator>
 std::string add(Random_Access_Iterator begin_x, Random_Access_Iterator end_x, Random_Access_Iterator begin_y,
@@ -39,9 +39,9 @@ std::string sub(std::string x, std::string y);
 
 std::string multiply(std::string x, std::string y);
 
-}  // namespace LaPointe_Algorithms::Multiplication::Karatsuba
+}  // namespace LaPointe_Algorithms::multiplication::karatsuba
 
-namespace LaPointe_Algorithms::Multiplication::Karatsuba::Internal {
+namespace LaPointe_Algorithms::multiplication::karatsuba::Internal {
 
 template <typename T>
 bool is_power_of_two(T num) {
@@ -114,17 +114,18 @@ static void add(Random_Access_Iterator begin_x, Random_Access_Iterator end_x, Ra
 template <typename Random_Access_Iterator>
 static void sub(Random_Access_Iterator begin_x, Random_Access_Iterator end_x, Random_Access_Iterator end_y,
                 Random_Access_Iterator end_diff) {
-  auto    x     = end_x - 1;
-  auto    y     = end_y - 1;
-  auto    s     = end_diff - 1;
-  int64_t carry = 0;
+  auto                     x     = end_x - 1;
+  auto                     y     = end_y - 1;
+  auto                     s     = end_diff - 1;
+  int64_t                  carry = 0;
+  static constexpr int64_t SHIFT_1_DIGIT_10{10};
   while (x >= begin_x) {
     int64_t y_digit = static_cast<int64_t>(*y - '0');
     int64_t x_digit = static_cast<int64_t>(*x - '0');
     int64_t value   = x_digit - y_digit - carry;
     carry           = 0;
     if (value < 0) {
-      value += 10;
+      value += SHIFT_1_DIGIT_10;
       carry = 1;
     }
     std::string tmp_value = std::to_string(value);
@@ -161,8 +162,8 @@ static std::string multiply(Random_Access_Iterator begin_x, Random_Access_Iterat
   std::advance(middle_y, half_n);
 
   // intermediate results
-  auto p = LaPointe_Algorithms::Multiplication::Karatsuba::add(begin_x, middle_x, middle_x, end_x);
-  auto q = LaPointe_Algorithms::Multiplication::Karatsuba::add(begin_y, middle_y, middle_y, end_y);
+  auto p = LaPointe_Algorithms::multiplication::karatsuba::add(begin_x, middle_x, middle_x, end_x);
+  auto q = LaPointe_Algorithms::multiplication::karatsuba::add(begin_y, middle_y, middle_y, end_y);
   if (q.length() > p.length()) {
     std::swap(p, q);
   }
@@ -174,8 +175,8 @@ static std::string multiply(Random_Access_Iterator begin_x, Random_Access_Iterat
   auto        pq    = multiply(p.begin(), p.end(), q.begin(), q.end());
 
   // intermediate results
-  auto        diff0 = LaPointe_Algorithms::Multiplication::Karatsuba::sub(pq, ac);
-  auto        abcd  = LaPointe_Algorithms::Multiplication::Karatsuba::sub(diff0, bd);
+  auto        diff0 = LaPointe_Algorithms::multiplication::karatsuba::sub(pq, ac);
+  auto        abcd  = LaPointe_Algorithms::multiplication::karatsuba::sub(diff0, bd);
 
   std::string acn(ac.length() + n, '0');
   acn.replace(0, ac.length(), ac);
@@ -184,14 +185,14 @@ static std::string multiply(Random_Access_Iterator begin_x, Random_Access_Iterat
   pqn.replace(0, abcd.length(), abcd);
 
   // collect the results
-  auto tmp2    = LaPointe_Algorithms::Multiplication::Karatsuba::add(acn, pqn);
-  auto product = LaPointe_Algorithms::Multiplication::Karatsuba::add(tmp2, bd);
+  auto tmp2    = LaPointe_Algorithms::multiplication::karatsuba::add(acn, pqn);
+  auto product = LaPointe_Algorithms::multiplication::karatsuba::add(tmp2, bd);
   return product;
 }
 
-}  // namespace LaPointe_Algorithms::Multiplication::Karatsuba::Internal
+}  // namespace LaPointe_Algorithms::multiplication::karatsuba::Internal
 
-namespace LaPointe_Algorithms::Multiplication::Karatsuba {
+namespace LaPointe_Algorithms::multiplication::karatsuba {
 
 std::string add(std::string x, std::string y) {
   Internal::make_equal_length(x, y);
@@ -237,4 +238,4 @@ std::string multiply(std::string x, std::string y) {
   return Internal::multiply(x.begin(), x.end(), y.begin(), y.end());
 }
 
-}  // namespace LaPointe_Algorithms::Multiplication::Karatsuba
+}  // namespace LaPointe_Algorithms::multiplication::karatsuba

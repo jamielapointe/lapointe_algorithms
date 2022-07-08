@@ -69,7 +69,7 @@ BENCHMARK_DEFINE_F(Sort_Fixture, SelectionSort)(benchmark::State& st) {
     st.PauseTiming();
     construct_random_set(st.range(0));
     st.ResumeTiming();
-    LaPointe_Algorithms::Data_Structures::Sort::selection_sort(data_.begin(), data_.end());
+    LaPointe_Algorithms::algorithms::sort::selection_sort(data_.begin(), data_.end());
   }
 }
 
@@ -79,7 +79,7 @@ BENCHMARK_DEFINE_F(Sort_Fixture, InsertionSort)(benchmark::State& st) {
     st.PauseTiming();
     construct_random_set(st.range(0));
     st.ResumeTiming();
-    LaPointe_Algorithms::Data_Structures::Sort::insertion_sort(data_.begin(), data_.end());
+    LaPointe_Algorithms::algorithms::sort::insertion_sort(data_.begin(), data_.end());
   }
 }
 
@@ -89,32 +89,44 @@ BENCHMARK_DEFINE_F(Sort_Fixture, BubbleSort)(benchmark::State& st) {
     st.PauseTiming();
     construct_random_set(st.range(0));
     st.ResumeTiming();
-    LaPointe_Algorithms::Data_Structures::Sort::bubble_sort(data_.begin(), data_.end());
+    LaPointe_Algorithms::algorithms::sort::bubble_sort(data_.begin(), data_.end());
   }
 }
 
 static constexpr std::int32_t range_multiplier{2};
 static constexpr std::int64_t range_lower{8};
 static constexpr std::int64_t range_upper{8 << 8};
-BENCHMARK_REGISTER_F(Sort_Fixture, StlSort)->RangeMultiplier(range_multiplier)->Range(range_lower, range_upper);
+BENCHMARK_REGISTER_F(Sort_Fixture, StlSort)  // NOLINT
+    ->RangeMultiplier(range_multiplier)
+    ->Range(range_lower, range_upper);
 #if defined(TBB_LIBRARY_FOUND)
-BENCHMARK_REGISTER_F(Sort_Fixture, StlParSort)->RangeMultiplier(range_multiplier)->Range(range_lower, range_upper);
-BENCHMARK_REGISTER_F(Sort_Fixture, StlParVecSort)->RangeMultiplier(range_multiplier)->Range(range_lower, range_upper);
+BENCHMARK_REGISTER_F(Sort_Fixture, StlParSort)  // NOLINT
+    ->RangeMultiplier(range_multiplier)
+    ->Range(range_lower, range_upper);
+BENCHMARK_REGISTER_F(Sort_Fixture, StlParVecSort)  // NOLINT
+    ->RangeMultiplier(range_multiplier)
+    ->Range(range_lower, range_upper);  // NOLINT
 #endif
-BENCHMARK_REGISTER_F(Sort_Fixture, SelectionSort)->RangeMultiplier(range_multiplier)->Range(range_lower, range_upper);
-BENCHMARK_REGISTER_F(Sort_Fixture, InsertionSort)->RangeMultiplier(range_multiplier)->Range(range_lower, range_upper);
-BENCHMARK_REGISTER_F(Sort_Fixture, BubbleSort)->RangeMultiplier(range_multiplier)->Range(range_lower, range_upper);
+BENCHMARK_REGISTER_F(Sort_Fixture, SelectionSort)  // NOLINT
+    ->RangeMultiplier(range_multiplier)
+    ->Range(range_lower, range_upper);
+BENCHMARK_REGISTER_F(Sort_Fixture, InsertionSort)  // NOLINT
+    ->RangeMultiplier(range_multiplier)
+    ->Range(range_lower, range_upper);
+BENCHMARK_REGISTER_F(Sort_Fixture, BubbleSort)  // NOLINT
+    ->RangeMultiplier(range_multiplier)
+    ->Range(range_lower, range_upper);
 
 static constexpr std::int64_t large_range_lower{8 << 9};
 static constexpr std::int64_t large_range_upper{8 << 25};
-BENCHMARK_REGISTER_F(Sort_Fixture, StlSort)
+BENCHMARK_REGISTER_F(Sort_Fixture, StlSort)  // NOLINT
     ->RangeMultiplier(range_multiplier)
     ->Range(large_range_lower, large_range_upper);
 #if defined(TBB_LIBRARY_FOUND)
-BENCHMARK_REGISTER_F(Sort_Fixture, StlParSort)
+BENCHMARK_REGISTER_F(Sort_Fixture, StlParSort)  // NOLINT
     ->RangeMultiplier(range_multiplier)
     ->Range(large_range_lower, large_range_upper);
-BENCHMARK_REGISTER_F(Sort_Fixture, StlParVecSort)
+BENCHMARK_REGISTER_F(Sort_Fixture, StlParVecSort)  // NOLINT
     ->RangeMultiplier(range_multiplier)
     ->Range(large_range_lower, large_range_upper);
 #endif

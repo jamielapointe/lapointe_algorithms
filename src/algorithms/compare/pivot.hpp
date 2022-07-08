@@ -4,7 +4,7 @@
 
 #include <iterator>
 
-namespace LaPointe_Algorithms::Data_Structures::Pivot {
+namespace LaPointe_Algorithms::algorithms::compare {
 
 struct Pivot_First_Element {
   template <typename Random_Access_Iterator>
@@ -49,4 +49,4 @@ struct Pivot_Median_Of_Three_Element {
 };
 constexpr inline Pivot_Median_Of_Three_Element pivot_median_of_three_element() { return {}; }
 
-}  // namespace LaPointe_Algorithms::Data_Structures::Pivot
+}  // namespace LaPointe_Algorithms::algorithms::compare

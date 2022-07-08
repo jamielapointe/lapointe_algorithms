@@ -21,12 +21,12 @@
 
 #include "comparisons.hpp"
 
-namespace LaPointe_Algorithms::Data_Structures::Sort {
+namespace LaPointe_Algorithms::algorithms::sort {
 
 template <typename Random_Access_Iterator,
-          typename Compare = LaPointe_Algorithms::Data_Structures::Compare::Iterator_Greater_Than_Value>
+          typename Compare = LaPointe_Algorithms::algorithms::compare::Iterator_Greater_Than_Value>
 void insertion_sort(Random_Access_Iterator begin, Random_Access_Iterator end,
-                    Compare comp = LaPointe_Algorithms::Data_Structures::Compare::iterator_greater_than_value()) {
+                    Compare comp = LaPointe_Algorithms::algorithms::compare::iterator_greater_than_value()) {
   Random_Access_Iterator i = begin + 1;
   while (i < end) {
     auto                   x = *i;
@@ -40,4 +40,4 @@ void insertion_sort(Random_Access_Iterator begin, Random_Access_Iterator end,
   }
 }
 
-}  // namespace LaPointe_Algorithms::Data_Structures::Sort
+}  // namespace LaPointe_Algorithms::algorithms::sort

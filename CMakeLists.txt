@@ -28,15 +28,6 @@ if(LaPointe_Enable_Clang-Tidy)
 endif()
 
 add_executable(benchmark_lapointe_algorithms)
-target_include_directories(benchmark_lapointe_algorithms PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/data_structures
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/data_structures/compare
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/data_structures/sort
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/graphs
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/leet
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/multiplication
-    ${CMAKE_CURRENT_SOURCE_DIR}/third_party/benchmark/include
-    ${CMAKE_BINARY_DIR})
 target_link_libraries(benchmark_lapointe_algorithms benchmark)
 
 find_library(TBB_LIBRARY tbb)
@@ -47,16 +38,18 @@ if(DEFINED TBB_LIBRARY)
 endif()
 
 add_executable(test_lapointe_algorithms)
-target_include_directories(test_lapointe_algorithms PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
+target_link_libraries(test_lapointe_algorithms gtest_main)
+
+include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/algorithms
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/algorithms/compare
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/algorithms/graphs
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/algorithms/sort
     ${CMAKE_CURRENT_SOURCE_DIR}/src/data_structures
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/data_structures/compare
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/data_structures/sort
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/graphs
     ${CMAKE_CURRENT_SOURCE_DIR}/src/leet
     ${CMAKE_CURRENT_SOURCE_DIR}/src/multiplication
-    ${CMAKE_CURRENT_SOURCE_DIR}/third_party/googletest/googletest/include
     ${CMAKE_BINARY_DIR})
-target_link_libraries(test_lapointe_algorithms gtest_main)
 
 if(MSVC)
 else()
@@ -75,3 +68,9 @@ add_subdirectory(test)
 
 configure_file(cmake/lapointe_algorithms_config.h.in lapointe_algorithms_config.h)
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/test/data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+install(TARGETS benchmark_lapointe_algorithms test_lapointe_algorithms
+    PUBLIC_HEADER
+    PRIVATE_HEADER)
+
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/test/data/ DESTINATION data/)

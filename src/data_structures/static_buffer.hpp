@@ -7,7 +7,8 @@
 #include <cstdint>
 #include <vector>
 
-namespace LaPointe_Algorithms {
+namespace LaPointe_Algorithms::data_structures {
+
 template <typename type_T, std::size_t capactiy_T>
 class Buffer {
  public:
@@ -74,11 +75,12 @@ class Buffer {
   }
 
  private:
-  static constexpr size_type              capacity_{capactiy_T};
-  [[__gnu__::__aligned__(8)]] buffer_type raw_buffer_{0};
-  size_type                               size_{0};
-  pointer                                 head_;
-  pointer                                 tail_;
+  static constexpr size_type                              capacity_{capactiy_T};
+  static constexpr std::size_t                            DEFAULT_ALIGNMENT{8};
+  [[__gnu__::__aligned__(DEFAULT_ALIGNMENT)]] buffer_type raw_buffer_{0};
+  size_type                                               size_{0};
+  pointer                                                 head_;
+  pointer                                                 tail_;
 };
 
-}  // namespace LaPointe_Algorithms
+}  // namespace LaPointe_Algorithms::data_structures

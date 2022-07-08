@@ -6,6 +6,8 @@
 #include <locale>
 #include <string>
 
+namespace LaPointe_Algorithms {
+
 // trim from start (in place)
 inline void ltrim(std::string &s) {
   s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch) { return !std::isspace(ch); }));
@@ -52,3 +54,5 @@ inline std::string trim_remove_leading_zeros_copy(std::string s) {
   }
   return s;
 }
+
+}  // namespace LaPointe_Algorithms
